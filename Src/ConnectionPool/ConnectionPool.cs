@@ -224,24 +224,17 @@ namespace ConnectionPool.Core
 
         #endregion
 
-        #region 搜索字典中可用的连接池对象
+        #region close 连接池对象
 
         /// <summary>
-        /// 搜索字典中可用的连接池对象
+        /// close 连接池对象
         /// </summary>
         /// <param name="currentDic"></param>
         /// <returns></returns>
         public void closeConnection(T conn)
         {
-            foreach (var k in currentDic.Keys)
-            {
-                if (k.Equals(conn))
-                {
-                    if (currentDic[k] == (int)ConnectionState.Open) currentDic[k] = (int)ConnectionState.Closed;
-
-                    break;
-                }
-            }
+            var c = currentDic.Keys.FirstOrDefault(t => t.Equals(conn));
+            if(c != null) currentDic[c] = (int)ConnectionState.Closed; 
         }
 
         #endregion
